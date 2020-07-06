@@ -1,0 +1,12 @@
+﻿/// <reference path="../Helpers/_vars" />
+/// <reference path="../Helpers/_mixins" />
+/// <reference path="../Helpers/_fonts" />
+
+html {
+	font-size: 62.5%; // 1.4rem = 14px, 3.2rem = 32px
+	text-rendering: optimizeLegibility;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-text-size-adjust: none;
+}

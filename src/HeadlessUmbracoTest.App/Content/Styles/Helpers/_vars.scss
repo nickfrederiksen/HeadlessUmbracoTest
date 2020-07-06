@@ -1,0 +1,18 @@
+//------- colors -------//
+// default
+$color-black: #000;
+$color-white: #fff;
+
+//------- Transistions and animation -------//
+$transition--cubic: cubic-bezier(.218,.63,.325,1);
+$transition: .6s $transition--cubic;
+$transition--slow: .95s $transition--cubic;
+$transition--fast: .4s $transition--cubic;
+
+//------- Media queries -------//
+$viewport-extra-small: 350px;
+$viewport-small: 576px;
+$viewport-medium: 992px;
+$viewport-large: 1025px;
+$viewport-extra-large: 1200px;
+$viewport-max: 1920px;

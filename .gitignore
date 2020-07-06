@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+src/HeadlessUmbracoTest.App/App_Data/
+src/HeadlessUmbracoTest.App/dist/
+src/HeadlessUmbracoTest.App/Umbraco/
+src/HeadlessUmbracoTest.App/Web.config

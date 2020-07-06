@@ -1,0 +1,60 @@
+﻿/// <reference path="../Helpers/_vars" />
+/// <reference path="../Helpers/_mixins" />
+/// <reference path="../Helpers/_fonts" />
+
+[class*=flex--] {
+    display: flex;
+}
+
+.flex {
+	display: flex;
+
+	&--start {
+		@include justify(start);
+	}
+
+	&--end {
+		@include justify(flex-end);
+	}
+
+	&--center {
+		@include justify(center);
+	}
+
+	&--start {
+		@include justify(flex-start);
+	}
+
+	&--space-around {
+		@include justify(space-around);
+	}
+
+	&--space-between {
+		@include justify(space-between);
+	}
+
+	&--center-center {
+		@include justify(center);
+		align-items: center;
+	}
+
+	&--vertical-stretch {
+		align-items: stretch
+	}
+
+	&--vertical-direction {
+		flex-direction: column;
+	}
+
+	&--bottom {
+		align-items: flex-end;
+	}
+
+	&--vertical-center {
+		align-items: center;
+	}
+}
+.reset-ul{
+    list-style: none;
+	padding-left: 0;
+}
