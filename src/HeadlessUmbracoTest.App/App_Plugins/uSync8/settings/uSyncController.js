@@ -2,6 +2,7 @@
     'use strict';
 
     function uSyncController($scope,
+        eventsService,
         notificationsService,
         editorService,
         uSync8DashboardService,
@@ -109,12 +110,15 @@
             uSync8DashboardService.checkVersion()
                 .then(function (result) {
                     vm.versionInfo = result.data;
-                })
+                });
         }
+
+
 
         ///////////
         function report(group) {
             resetStatus(modes.REPORT);
+            getWarnings('report');
 
             uSync8DashboardService.report(group, getClientId())
                 .then(function (result) {
@@ -146,6 +150,7 @@
                     vm.savings.show = true;
                     vm.savings.title = 'All items exported.';
                     vm.savings.message = 'Now go wash your hands 🧼!';
+                    eventsService.emit('usync-dashboard.export.complete');
                 }, function (error) {
                     notificationsService.error('Exporting', error.data.ExceptionMessage);
                     vm.exportButton.state = 'error';
@@ -158,7 +163,9 @@
 
         function importItems(force, group) {
             resetStatus(modes.IMPORT);
-            vm.hideLink = true;
+            getWarnings('import');
+
+            vm.hideLink = false;
             vm.importButton.state = 'busy';
 
             uSync8DashboardService.importItems(force, group, getClientId())
@@ -167,7 +174,7 @@
                     vm.working = false;
                     vm.reported = true;
                     vm.importButton.state = 'success';
-
+                    eventsService.emit('usync-dashboard.import.complete');
                     calculateTimeSaved(vm.results);
                 }, function (error) {
                     vm.importButton.state = 'error';
@@ -204,6 +211,14 @@
 
         //////////////
 
+        function getWarnings(action) {
+            uSync8DashboardService.getSyncWarnings(action)
+                .then(function (result) {
+                    vm.warnings = result.data;
+                });
+        }
+
+
         function getHandlerGroups() {
             uSync8DashboardService.getHandlerGroups()
                 .then(function (result) {
@@ -220,9 +235,8 @@
                             },
                             labelKey: 'usync_report-' + group.toLowerCase()
                         });
-
-                        vm.loading = false;
                     });
+                    vm.loading = false;
                 }, function (error) {
                     vm.loading = false;
                 });
@@ -285,6 +299,8 @@
 
         /// resets all the flags, and messages to the start 
         function resetStatus(mode) {
+            vm.warnings = {};
+
             vm.reported = vm.showAll = false;
             vm.working = true;
             vm.runmode = mode;
