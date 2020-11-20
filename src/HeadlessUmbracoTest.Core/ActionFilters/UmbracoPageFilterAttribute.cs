@@ -7,7 +7,9 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using HeadlessUmbracoTest.Core.Helpers;
+using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
+using Umbraco.Web;
 using Umbraco.Web.Routing;
 using Umbraco.Web.WebApi;
 
@@ -39,14 +41,14 @@ namespace HeadlessUmbracoTest.Core.ActionFilters
 			IPublishedContent content = FindContent(actionContext, controller);
 
 			// Validate content and culture:
-			if (content == null || !content.Cultures.Any(c => c.Value.Culture.Equals(cultureCode, StringComparison.InvariantCultureIgnoreCase)))
+			if (content == null || !content.Cultures.Any(c => c.Value.Culture.IsNullOrWhiteSpace() || c.Value.Culture.Equals(cultureCode, StringComparison.InvariantCultureIgnoreCase)))
 			{
 				return null;
 			}
 
 			var router = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IPublishedRouter)) as IPublishedRouter;
 
-			var contentRequest = router.CreateRequest(controller.UmbracoContext, new Uri(content.Url, UriKind.RelativeOrAbsolute));
+			var contentRequest = router.CreateRequest(controller.UmbracoContext, new Uri(content.Url(cultureCode, UrlMode.Absolute), UriKind.Absolute));
 
 			contentRequest.PublishedContent = content;
 

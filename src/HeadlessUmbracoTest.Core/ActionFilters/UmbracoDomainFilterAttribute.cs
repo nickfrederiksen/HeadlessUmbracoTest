@@ -19,7 +19,7 @@ namespace HeadlessUmbracoTest.Core.ActionFilters
 
 			var cultureInfo = CultureInfo.GetCultureInfo(cultureCode);
 
-			var domain = controller.UmbracoContext.Domains.GetAll(false).SingleOrDefault(d => d.Culture == cultureInfo);
+			var domain = controller.UmbracoContext.Domains.GetAll(false).FirstOrDefault(d => d.Culture == cultureInfo);
 
 			if (domain == null)
 			{

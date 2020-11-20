@@ -29,6 +29,8 @@ namespace HeadlessUmbracoTest.Core.Controllers
 				{
 					var controller = controllerDescriptor.CreateController(this.Request);
 					var controllerContext = new HttpControllerContext(this.RequestContext, this.Request, controllerDescriptor, controller);
+					this.SanitizeRouteValues(controllerContext);
+
 					var responseMessage = await controller.ExecuteAsync(controllerContext, cancellationToken);
 
 					var result = this.ResponseMessage(responseMessage);
@@ -74,6 +76,15 @@ namespace HeadlessUmbracoTest.Core.Controllers
 			else
 			{
 				return null;
+			}
+		}
+
+		private void SanitizeRouteValues(HttpControllerContext controllerContext)
+		{
+			var routeValue = controllerContext.RouteData.Values;
+			if (routeValue.ContainsKey("area"))
+			{
+				routeValue.Remove("area");
 			}
 		}
 	}

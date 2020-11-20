@@ -11,7 +11,8 @@ namespace HeadlessUmbracoTest.App.Controllers
 	[CacheControl(MaxAge = 600, IsPublic = false)]
 	public class HomeController : HeadlessPageController<Home>
 	{
-		public override IHttpActionResult Index()
+		[HttpGet]
+		public IHttpActionResult Index(int? test = null)
 		{
 			var model = new HomeModel()
 			{

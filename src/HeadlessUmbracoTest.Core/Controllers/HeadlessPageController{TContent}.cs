@@ -10,9 +10,6 @@ namespace HeadlessUmbracoTest.Core.Controllers
 	{
 		protected TContent CurrentPage => (TContent)this.GetCurrentPage();
 
-		[HttpGet]
-		public abstract IHttpActionResult Index();
-
 		protected OkNegotiatedContentResult<PageData<TPageModel>> PageData<TPageModel>(TPageModel pageData)
 		{
 			PageData<TPageModel> model = this.WrapPageData(pageData);
